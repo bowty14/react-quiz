@@ -1,12 +1,13 @@
 import React from 'react';
 import NewQuizForm from './NewQuizForm';
+import EditQuizForm from './EditQuizForm';
 import QuizList from './QuizList';
 import QuizDetail from './QuizDetail';
 import PropTypes from 'prop-types';
 import * as a from './../actions';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
-import Quiz from './Quiz';
+
 
 
 class QuizControl extends React.Component {
@@ -27,7 +28,7 @@ class QuizControl extends React.Component {
       });
     } else {
       const { dispatch } = this.props;
-      dispatch(a.toggleFormData());
+      dispatch(a.toggleForm());
     }
   }
 
@@ -38,7 +39,7 @@ class QuizControl extends React.Component {
 
   handleChangingSelectedQuiz = (id) => {
     this.props.firestore.get({ collection: 'quizes', doc: id }).then((quiz) => {
-      const forestoreQuiz = {
+      const firestoreQuiz = {
         name: quiz.get('name'),
         q1: quiz.get('q1'),
         a1: quiz.get('a1'),
@@ -48,12 +49,14 @@ class QuizControl extends React.Component {
         a3: quiz.get('a3'),
         q4: quiz.get('q4'),
         a4: quiz.get('a4'),
+        id: quiz.id
       }
       this.setState({ selectedQuiz: firestoreQuiz });
     });
   }
 
   handleDeletingQuiz = (id) => {
+    console.log(id);
     this.props.firestore.delete({ collection: 'quizes', doc: id });
     this.setState({ selectedQuiz: null });
   }
@@ -63,8 +66,11 @@ class QuizControl extends React.Component {
     this.setState({ editing: true });
   }
 
-  handleEditingTicketInList = () => {
-
+  handleEditingQuizInList = () => {
+    this.setState({
+      editing: false,
+      selectedQuiz: null
+    });
   }
 
   render() {
@@ -72,10 +78,12 @@ class QuizControl extends React.Component {
     let buttonText = null;
 
     if (this.state.editing) {
-      // Edit Form Goes Here
+      currentlyVisibleState = <EditQuizForm quiz={this.state.selectedQuiz} onEditQuiz={this.handleEditingQuizInList} />
       buttonText = "Return to Quiz List";
     } else if (this.state.selectedQuiz !== null) {
       currentlyVisibleState = <QuizDetail
+        onClickingEdit={this.handleEditClick}
+        onClickingDelete={this.handleDeletingQuiz}
         quiz={this.state.selectedQuiz} />
       buttonText = "Return to Quiz List";
     } else if (this.props.formVisibleOnPage) {
@@ -85,6 +93,7 @@ class QuizControl extends React.Component {
     } else {
       currentlyVisibleState = <QuizList
         onQuizSelection={this.handleChangingSelectedQuiz} />
+      buttonText = "Add a quiz"
     }
 
     return (
@@ -108,3 +117,19 @@ const mapStateToProps = state => {
 
 QuizControl = connect(mapStateToProps)(QuizControl);
 export default withFirestore(QuizControl);
+// export default QuizControl;
+
+// a1 = input on newquizform
+// answer1 = input on quizdetail
+// answer1 should === a1 and return a success message
+// if ({ a1 } === { answer1 }) {
+//   return (
+//     <React.Fragment>
+//       <h3>That is correct</h3>
+//       {a1 === answer1 && "message to show"}
+//     </React.Fragment>
+//   )
+// }else
+//   return false
+
+

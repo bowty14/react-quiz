@@ -16,7 +16,7 @@ function Quiz(props) {
 }
 
 
-Quiz.PropTypes = {
+Quiz.propTypes = {
   name: PropTypes.string,
   q1: PropTypes.string,
   q2: PropTypes.string,

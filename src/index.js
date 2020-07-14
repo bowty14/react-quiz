@@ -3,11 +3,34 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import rootReducer from './reducers/index';
+import { createStore } from 'redux';
+import firebase from './firebase';
+import { Provider } from 'react-redux';
+
+const store = createStore(rootReducer);
+store.subscribe(() => {
+  // console.log(store.getState())
+});
+
+const rrfProps = {
+  firebase,
+  config: {
+    userProfile: 'users',
+    useFirestoreForProfile: true,
+  },
+  dispatch: store.dispatch,
+  createFirestoreInstance
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+    </ReactReduxFirebaseProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

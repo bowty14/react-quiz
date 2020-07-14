@@ -6,7 +6,9 @@ function App() {
   return (
     <React.Fragment>
       <Header />
-      <QuizControl />
+      <div className='container'>
+        <QuizControl />
+      </div>
     </React.Fragment>
   );
 }
