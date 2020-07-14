@@ -24,7 +24,7 @@ function EditQuizForm(props) {
 
   return (
     <React.Fragment>
-      <form onSubmit={handleEditQuizFormSubmission}>
+      <form onSubmit={handleEditQuizFormSubmission} className='form-control'>
         <input
           type='text'
           name='q1'

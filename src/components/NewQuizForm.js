@@ -31,7 +31,7 @@ function NewQuizForm(props) {
 
   return (
     <React.Fragment>
-      <form onSubmit={addQuizForm}>
+      <form onSubmit={addQuizForm} className='form-control'>
         <input
           type='text'
           name='q1'

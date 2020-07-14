@@ -24,24 +24,26 @@ function QuizDetail(props) {
   return (
     <React.Fragment>
       <h1>Quiz Detail</h1>
-      <form onSubmit={checkAnswers}>
-        <p>{quiz.q1}</p>
-        <input type='text' name='a1'></input>
-        <p id='r1'></p>
-        <p>{quiz.q2}</p>
-        <input type='text' name='a2'></input>
-        <p id='r2'></p>
-        <p>{quiz.q3}</p>
-        <input type='text' name='a3'></input>
-        <p id='r3'></p>
-        <p>{quiz.q4}</p>
-        <input type='text' name='a4'></input>
-        <p id='r4'></p>
-        <button type='submit'>Submit</button>
-      </form>
-      <hr />
-      <button onClick={props.onClickingEdit}>Update Quiz</button>
-      <button onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</button>
+      <div className='quizDetail'>
+        <form onSubmit={checkAnswers}> 
+          <p className='question1' >{quiz.q1}</p>
+          <input type='text' name='a1' placeholder='Enter answer here' className='answer'></input>
+          <p id='r1'></p>
+          <p className='question2' >{quiz.q2}</p>
+          <input type='text' name='a2' placeholder='Enter answer here' className='answer'></input>
+          <p id='r2'></p>
+          <p className='question3' >{quiz.q3}</p>
+          <input type='text' name='a3' placeholder='Enter answer here' className='answer'></input>
+          <p id='r3'></p>
+          <p className='question4' >{quiz.q4}</p>
+          <input type='text' name='a4' placeholder='Enter answer here' className='answer'></input>
+          <p id='r4'></p>
+          <button className='submitButton' type='submit'>Submit</button>
+        </form>
+      </div>
+
+      <button className='detailButton' id='detailEdit' onClick={props.onClickingEdit}>Update Quiz</button>
+      <button className='detailButton' id='detailDelete' onClick={() => onClickingDelete(quiz.id)}>Delete Quiz</button>
     </React.Fragment>
   );
 

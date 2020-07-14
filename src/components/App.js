@@ -5,7 +5,7 @@ import QuizControl from './QuizControl';
 function App() {
   return (
     <React.Fragment>
-      <Header />
+      <div className='header'> <Header /> </div>
       <div className='container'>
         <QuizControl />
       </div>
